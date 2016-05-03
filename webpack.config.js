@@ -7,7 +7,7 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
-    './src/index'
+    './src/js/apps/MainApp'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -22,15 +22,27 @@ module.exports = {
   ],
   module: {
     loaders: [
-    { 
-      test: /\.jpg$/, 
-      loader: 'file',
-      include: path.join(__dirname, 'src')
+    {
+      test: /\.html$/,
+      loader: 'html'
+    },
+    {
+      test: /\.less$/,
+      loader:'style!css!less',
+      include: path.join(__dirname, '/src/styles')
+    },
+    {
+      test: /\.(jpe?g|png|gif|svg)$/,
+      loader:'file'
+    },
+    {
+      test: /\.(woff|woff2|ttf|eot)$/,
+      loader:'file'
     },
     {
       test: /\.js$/,
-      loaders: ['react-hot', 'babel'],
-      include: path.join(__dirname, 'src')
+      loader: 'react-hot!babel',
+      include: path.join(__dirname, '/src/js')
     }]
   }
 };
