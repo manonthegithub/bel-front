@@ -1,10 +1,4 @@
-require('../img/3.jpg');
-
 var React = require('react');
-var ReactDOM = require('react-dom');
-var $ = require('jquery');
-
-
 
 var ProductListForAdmin = React.createClass({
   getInitialState: function() {
@@ -192,9 +186,3 @@ var CommonProductInfo = React.createClass({
   }
 
 });
-
-
-ReactDOM.render(
-  <ProductListForAdmin url="/api/adm/boxes"/>,
-  document.getElementById('products-list')
-);

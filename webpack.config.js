@@ -1,13 +1,15 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'eval',
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
-    './src/js/apps/MainApp'
+    './src/js/apps/index'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -17,19 +19,23 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '/src/index.tmpl.html')
-    })
+      filename:'contact.html',
+      template: path.join(__dirname, '/src/templates/contact.jade')
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '/src/templates/main.jade')
+    }),
+    new ExtractTextPlugin("style.css")
   ],
   module: {
     loaders: [
     {
-      test: /\.html$/,
-      loader: 'html'
+      test: /\.jade$/,
+      loader: 'html!jade-html'
     },
     {
       test: /\.less$/,
-      loader:'style!css!less',
-      include: path.join(__dirname, '/src/styles')
+      loader: ExtractTextPlugin.extract('style', 'css!less')
     },
     {
       test: /\.(jpe?g|png|gif|svg)$/,
@@ -41,8 +47,9 @@ module.exports = {
     },
     {
       test: /\.js$/,
-      loader: 'react-hot!babel',
+      loader: 'react-hot!babel'
       include: path.join(__dirname, '/src/js')
-    }]
+    }
+    ]
   }
 };

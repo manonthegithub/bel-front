@@ -1,37 +1,17 @@
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+var lessPlugin = new ExtractTextPlugin("styles.css", {
+    allChunks: true
+});
+
 
 module.exports = [
-// {
-//   entry: [
-//     './src/js/productViewComponent'
-//   ],
-//   output: {
-//     path: path.join(__dirname, 'dist'),
-//     filename: 'bundle2.js'
-//   },
-//   plugins: [
-//     new HtmlWebpackPlugin({
-//       template: path.join(__dirname, '/src/indextest.tmpl.html')
-//     })
-//   ],
-//   module: {
-//     loaders: [
-//     {
-//       test: /\.jpg$/,
-//       loader: 'file',
-//       include: path.join(__dirname, '/src/img')
-//     },
-//     {
-//       test: /\.js$/,
-//       loaders: ['babel'],
-//       include: path.join(__dirname, '/src/js')
-//     }]
-//   }
-// },
 {
   entry: [
-    './src/js/apps/MainApp'
+    './src/js/apps/index'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -40,19 +20,30 @@ module.exports = [
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '/src/index.tmpl.html')
-    })
+      filename:'boxes.html',
+      template: path.join(__dirname, '/src/templates/boxes.jade')
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '/src/templates/main.jade')
+    }),
+    new HtmlWebpackPlugin({
+      filename:'contact.html',
+      template: path.join(__dirname, '/src/templates/contact.jade')
+    }),
+    new CleanWebpackPlugin(['dist'], {
+      verbose: true
+    }),
+    lessPlugin
   ],
   module: {
     loaders: [
     {
-      test: /\.html$/,
-      loader: 'html'
+      test: /\.jade$/,
+      loader: 'html?attrs=img:src link:href!jade-html'
     },
     {
-      test: /\.less$/,
-      loader:'style!css!less',
-      include: path.join(__dirname, '/src/styles')
+      test: /\.less$/i,
+      loader: lessPlugin.extract('style', 'css!less')
     },
     {
       test: /\.(jpe?g|png|gif|svg)$/,
@@ -66,6 +57,11 @@ module.exports = [
       test: /\.js$/,
       loader: 'babel',
       include: path.join(__dirname, '/src/js')
-    }]
+    },
+    {
+      test: /\.css$/,
+      loader: 'style!css'
+    }
+    ]
   }
 }];

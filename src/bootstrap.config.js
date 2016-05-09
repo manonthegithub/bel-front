@@ -1,0 +1,62 @@
+module.exports = {
+  styleLoader: require('extract-text-webpack-plugin').extract('style', 'css!less'),
+  scripts: {
+    'alert': true,
+    'button': true,
+    'carousel': true,
+    'dropdown': true,
+    'modal': true,
+    'tooltip': true,
+    'popover': true,
+    'tab': true,
+    'affix': true,
+    'collapse': true,
+    'scrollspy': true,
+    'transition': true
+  },
+  styles: {
+    // add every bootstrap style you need
+    "mixins": true,
+    "print": true,
+    "type": true,
+    "code": true,
+    "tables": true,
+    "grid": true,
+    "forms": true,
+    "buttons": true,
+    "utilities": true,
+
+    "normalize": true,
+
+
+    "scaffolding": true,
+
+    "responsive-utilities": true,
+    "glyphicons": true,
+    "button-groups": true,
+    "input-groups": true,
+    "breadcrumbs": true,
+    "pagination": true,
+    "pager": true,
+    "labels": true,
+    "badges": true,
+    "jumbotron": true,
+    "thumbnails": true,
+    "alerts": true,
+    "progress-bars": true,
+    "media": true,
+    "list-group": true,
+    "panels": true,
+    "responsive-embed": true,
+    "wells": true,
+    "close": true,
+    "component-animations": true,
+    "dropdowns": true,
+    "tooltip": true,
+    "popovers": true,
+    "modals": true,
+    "carousel": true,
+    "navs": true,
+    "navbar": true,
+  }
+};

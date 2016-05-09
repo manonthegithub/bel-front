@@ -1,0 +1,46 @@
+extends ./layout.jade
+
+block content
+  .container
+    .row
+        .box
+          .col-lg-12
+            hr
+            |                 
+            h2.intro-text.text-center
+              strong &Fcy;&ocy;&rcy;&mcy;&acy; &ocy;&bcy;&rcy;&acy;&tcy;&ncy;&ocy;&jcy; &scy;&vcy;&yacy;&zcy;&icy;
+            |                 
+            hr
+            |                 
+            p
+              | &IEcy;&scy;&lcy;&icy; &ucy; &vcy;&acy;&scy; &iecy;&scy;&tcy;&softcy; &vcy;&ocy;&pcy;&rcy;&ocy;&scy;&ycy;, &pcy;&rcy;&iecy;&dcy;&lcy;&ocy;&zhcy;&iecy;&ncy;&icy;&yacy; &icy;&lcy;&icy; &pcy;&ocy;&zhcy;&iecy;&lcy;&acy;&ncy;&icy;&yacy;,
+              | &icy;&lcy;&icy; &vcy;&ycy; &pcy;&rcy;&ocy;&scy;&tcy;&ocy; &khcy;&ocy;&tcy;&icy;&tcy;&iecy; &ocy;&scy;&tcy;&acy;&vcy;&icy;&tcy;&softcy; &ncy;&acy;&mcy; &ocy;&tcy;&zcy;&ycy;&vcy;, &tcy;&ocy; &mcy;&ocy;&zhcy;&iecy;&tcy;&iecy; &vcy;&ocy;&scy;&pcy;&ocy;&lcy;&softcy;&zcy;&ocy;&vcy;&acy;&tcy;&softcy;&scy;&yacy; &kcy;&ocy;&ncy;&tcy;&acy;&kcy;&tcy;&ncy;&ocy;&jcy; &fcy;&ocy;&rcy;&mcy;&ocy;&jcy; &ncy;&icy;&zhcy;&iecy;
+              | &lcy;&icy;&bcy;&ocy; &ncy;&acy;&pcy;&icy;&scy;&acy;&tcy;&softcy; &ncy;&acy; &ncy;&acy;&shcy; &acy;&dcy;&rcy;&iecy;&scy;&nbsp;
+              a(href='mailto:info@bookpleasure.ru') info@bookpleasure.ru
+            |                 
+            form(role='form', method='POST', action='./api/contact')
+              .row
+                .form-group.col-lg-6
+                  label &Vcy;&acy;&shcy;&iecy; &icy;&mcy;&yacy;
+                  |                             
+                  input.form-control(type='text', required='', name='name')
+                |                         
+                .form-group.col-lg-6
+                  label &Vcy;&acy;&shcy; email
+                  |                             
+                  input.form-control(type='email', required='', name='email')
+                |                         
+                .clearfix
+                |                         
+                .form-group.col-lg-12
+                  label &Scy;&ocy;&ocy;&bcy;&shchcy;&iecy;&ncy;&icy;&iecy;
+                  |                             
+                  textarea.form-control(required='', rows='6', name='message')
+                |                         
+                .form-group.col-lg-12
+                  button.btn.btn-default(type='submit') &Ocy;&tcy;&pcy;&rcy;&acy;&vcy;&icy;&tcy;&softcy;
+                  |                             
+                  img#spinner(hidden='true', alt='activity indicator', src='../img/ajax-loader.gif')
+                  |                             
+                  span#submit-result
+    // /.container
