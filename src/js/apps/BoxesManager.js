@@ -1,4 +1,4 @@
-require('../components/productViewComponent');
+import {ProductListForAdmin} from '../components/productViewComponent';
 var ReactDOM = require('react-dom');
 var React = require('react');
 

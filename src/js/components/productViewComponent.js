@@ -1,10 +1,8 @@
 var React = require('react');
 
-var ProductListForAdmin = React.createClass({
-  getInitialState: function() {
-    return {data: []};
-  },
-  componentDidMount: function() {
+export class ProductListForAdmin extends React.Component{
+
+  componentDidMount() {
     $.ajax({
       url: this.props.url,
       cache: false,
@@ -15,47 +13,51 @@ var ProductListForAdmin = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-  },
+  }
 
-  removeButtonClickHandler: function (id){
-      $.ajax({
-        type: "DELETE",
-        url: './api/adm/boxes/'+ id,
-        success: function(){
-            this.setState({
-              data: this.state.data.filter((x) => x.id != id )
-            });
-        }.bind(this),
-      });
-  },
+  state = {
+   data: [],
+  }
 
-  render: function() {
-      var productNodes = this.state.data.map(function(prod) {
-        return (
-          <ProductViewForAdmin
-              name={prod.name}
-              price={prod.price}
-              image={prod.imageLink}
-              description={prod.description}
-              enabled={prod.enabled}
-              id={prod.id}
-              removeHandler={this.removeButtonClickHandler.bind(this, prod.id)}/>
-        );
-      }.bind(this));
+  removeButtonClickHandler(id){
+    $.ajax({
+      type: "DELETE",
+      url: './api/adm/boxes/'+ id,
+      success: function(){
+          this.setState({
+            data: this.state.data.filter((x) => x.id != id )
+          });
+      }.bind(this),
+    });
+  }
+
+  render() {
+    var productNodes = this.state.data.map(function(prod) {
       return (
-        <div id="products-list" className="container">
-          <NewBoxForm/>
-          {productNodes}
-        </div>
+        <ProductViewForAdmin
+            name={prod.name}
+            price={prod.price}
+            image={prod.imageLink}
+            description={prod.description}
+            enabled={prod.enabled}
+            id={prod.id}
+            removeHandler={this.removeButtonClickHandler.bind(this, prod.id)}/>
       );
-    }
-});
-
-
-var ProductViewForAdmin = React.createClass({
-
-  render: function() {
+    }.bind(this));
     return (
+      <div id="products-list" className="container">
+        <NewBoxForm/>
+        {productNodes}
+      </div>
+    );
+  }
+};
+
+
+export class ProductViewForAdmin  extends React.Component{
+
+  render() {
+    return(
         <div className="row">
             <div className="box">
                 <CommonProductInfo
@@ -78,11 +80,11 @@ var ProductViewForAdmin = React.createClass({
 
     );
   }
-});
+};
 
-var NewBoxForm = React.createClass({
+class NewBoxForm  extends React.Component{
 
-    handleSubmit: function(e){
+    handleSubmit(e){
         e.preventDefault();
         var form = $('form');
         var o = {};
@@ -117,10 +119,10 @@ var NewBoxForm = React.createClass({
 
         return false;
 
-    },
+    }
 
 
-    render: function(){
+    render(){
         return (
         <div className="row">
          <div className="box">
@@ -157,10 +159,10 @@ var NewBoxForm = React.createClass({
 
         );
     }
-});
+};
 
-var CommonProductInfo = React.createClass({
-    render: function() {
+export class CommonProductInfo extends React.Component{
+    render() {
         return (
            <div>
               <div className="col-lg-12">
@@ -185,4 +187,4 @@ var CommonProductInfo = React.createClass({
         );
   }
 
-});
+};
