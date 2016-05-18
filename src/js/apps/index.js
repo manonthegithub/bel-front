@@ -1,8 +1,12 @@
 require('expose?$!expose?jQuery!jquery');
-
 require('bootstrap-webpack!../../bootstrap.config.js');
 require('../../styles/style.less');
 
-require('./MainApp');
-require('./ContactApp');
-require('./BoxesManager');
+
+$(document).ready(
+    function(){
+        $('.carousel').carousel({
+            interval: 5000 //changes the speed
+        })
+    }
+);

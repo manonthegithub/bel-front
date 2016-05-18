@@ -5,7 +5,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'eval-source-map',
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
@@ -21,6 +21,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename:'contact.html',
       template: path.join(__dirname, '/src/templates/contact.jade')
+    }),
+    new HtmlWebpackPlugin({
+      filename:'order.html',
+      template: path.join(__dirname, '/src/templates/order.jade')
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '/src/templates/main.jade')
