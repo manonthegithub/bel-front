@@ -49,6 +49,7 @@
     "bootstrap-webpack": "0.0.5",
     "jquery": "^2.2.3",
     "react": "^0.14.6",
-    "react-dom": "^0.14.6"
+    "react-dom": "^0.14.6",
+    "react-redux": "^4.4.5"
   }
 }

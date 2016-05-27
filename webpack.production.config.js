@@ -36,6 +36,10 @@ module.exports = [
       template: path.join(__dirname, '/src/templates/boxes.jade')
     }),
     new HtmlWebpackPlugin({
+      filename: 'faq.html',
+      template: path.join(__dirname, '/src/templates/faq.jade')
+    }),
+    new HtmlWebpackPlugin({
       filename: 'index.html',
       chunks: ['index','commons'],
       template: path.join(__dirname, '/src/templates/index.jade')
@@ -54,7 +58,7 @@ module.exports = [
       filename: 'commons-[hash].js'
       }),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
+    //new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.DedupePlugin(),
   ],
   module: {

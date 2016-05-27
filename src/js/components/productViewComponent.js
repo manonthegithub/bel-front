@@ -1,38 +1,26 @@
-var React = require('react');
+import React from 'react'
+import { connect } from 'react-redux'
 
-export class ProductListForAdmin extends React.Component{
+
+class ProductListForAdmin extends React.Component{
 
   componentDidMount() {
     $.ajax({
       url: this.props.url,
       cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
+      success: (response) => {
+        this.props.onProductAction({type: 'SET_NEW_DATA', array: response})
+      },
+      error: (xhr, status, err) => {
         console.error(this.props.url, status, err.toString());
-      }.bind(this)
+      }
     });
   }
 
-  state = {
-   data: [],
-  }
 
-  removeButtonClickHandler(id){
-    $.ajax({
-      type: "DELETE",
-      url: './api/adm/boxes/'+ id,
-      success: function(){
-          this.setState({
-            data: this.state.data.filter((x) => x.id != id )
-          });
-      }.bind(this),
-    });
-  }
 
   render() {
-    var productNodes = this.state.data.map(function(prod) {
+    var productNodes = this.props.data.map(function (prod) {
       return (
         <ProductViewForAdmin
             name={prod.name}
@@ -41,12 +29,12 @@ export class ProductListForAdmin extends React.Component{
             description={prod.description}
             enabled={prod.enabled}
             id={prod.id}
-            removeHandler={this.removeButtonClickHandler.bind(this, prod.id)}/>
+            onProductAction={this.props.onProductAction}/>
       );
     }.bind(this));
     return (
       <div id="products-list" className="container">
-        <NewBoxForm/>
+        <NewBoxForm onProductAction={this.props.onProductAction}/>
         {productNodes}
       </div>
     );
@@ -54,7 +42,17 @@ export class ProductListForAdmin extends React.Component{
 };
 
 
-export class ProductViewForAdmin  extends React.Component{
+class ProductViewForAdmin  extends React.Component{
+
+  removeHandler(id){
+    $.ajax({
+      type: "DELETE",
+      url: './api/adm/boxes/'+ id,
+      success: () => {
+          this.props.onProductAction({type:'REMOVE',id: id})
+      }
+    });
+  }
 
   render() {
     return(
@@ -66,7 +64,7 @@ export class ProductViewForAdmin  extends React.Component{
                     image={this.props.image}
                     description={this.props.description} />
 
-                <button onClick={this.props.removeHandler} className="btn btn-default">
+                <button onClick={this.removeHandler} className="btn btn-default">
                     Удалить
                 </button>
 
@@ -103,15 +101,17 @@ class NewBoxForm  extends React.Component{
         if(fileInput.files[0]){
             var reader = new FileReader();
             reader.readAsBinaryString(fileInput.files[0]);
-            reader.onloadend = function () {
+            reader.onloadend =  () => {
                 o[fileInput.name] = btoa(reader.result);
                 o['imageLink'] = fileInput.files[0].name;
 
                 $.ajax({
-                  type: "POST",
+                  type: "PUT",
                   url: './api/adm/boxes/',
                   data: JSON.stringify(o),
-                  success: function(){},
+                  success: (elem) => {
+                    this.props.onProductAction({type:'ADD',item: elem})
+                  },
                   contentType : "application/json"
                 });
             };
@@ -133,7 +133,7 @@ class NewBoxForm  extends React.Component{
             </h2>
             <hr />
           </div>
-          <form method="POST" action="./api/adm/boxes/" encType="application/json" onSubmit={this.handleSubmit}>
+          <form method="PUT" action="./api/adm/boxes/" encType="application/json" onSubmit={this.handleSubmit}>
             <div className="form-group col-md-6">
               <input type="hidden" required className="form-control" name="category" defaultValue="BOOKBOX" />
               <div>Название бокса :</div><input type="text" required className="form-control" name="name" />
@@ -144,12 +144,11 @@ class NewBoxForm  extends React.Component{
             <div className="form-group col-md-6">
               <div>Описание бокса :</div>
               <div>
-                <textarea className="form-control" required rows={12} name="description" defaultValue={""} />
+                <textarea className="form-control" required rows={9} name="description" defaultValue={""} />
               </div>
             </div>
             <div className="form-group col-lg-12">
               <button type="submit" className="btn btn-default">Создать</button>
-              <img id="spinner" hidden="true" alt="activity indicator" src="img/ajax-loader.gif" />
               <span id="submit-result" />
             </div>
           </form>
@@ -187,4 +186,22 @@ export class CommonProductInfo extends React.Component{
         );
   }
 
-};
+}
+
+
+const mapStateToProps = (state) => {
+  return {
+    data: state.data
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onProductAction: (action) => dispatch(action)
+  }
+}
+
+export const AdminProductList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProductListForAdmin)
