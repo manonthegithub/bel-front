@@ -26,6 +26,10 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      filename: '404.html',
+      template: path.join(__dirname, '/src/templates/404.jade')
+    }),
+    new HtmlWebpackPlugin({
       filename:'order.html',
       chunks: ['order','commons'],
       template: path.join(__dirname, '/src/templates/order.jade')
@@ -33,7 +37,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename:'boxes.html',
       chunks: ['boxes','commons'],
-      template: path.join(__dirname, '/src/templates/boxes.jade')
+      template: path.join(__dirname, '/src/templates/products.jade')
     }),
     new HtmlWebpackPlugin({
       filename: 'faq.html',

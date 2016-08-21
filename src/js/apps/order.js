@@ -1,3 +1,7 @@
+/**
+ * Страница с букбоксами и возможностью их заказа
+ */
+
 require('expose?$!expose?jQuery!jquery');
 require('bootstrap-webpack!../../bootstrap.config.js');
 require('../../styles/style.less');
@@ -13,6 +17,7 @@ class Product extends React.Component {
         <div className="row">
             <div className="box">
                 <CommonProductInfo
+                    id={this.props.id}
                     name={this.props.name}
                     price={this.props.price}
                     image={this.props.image}
